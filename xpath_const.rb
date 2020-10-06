@@ -7,3 +7,6 @@ FOLLOWERS_XPATH = TOP_INFO_BLOCK + '/span[text()="Followers"]/../span[2]'
 ER_XPATH = TOP_INFO_BLOCK + '/span[text()="Engagement Rate"]/../span[3]'
 
 TABLE_AVG_FOLLOWERS_XPATH = '//div[contains(text(), "Daily Averages")]/..//span'
+
+VALID_XPATH = '//div[contains(text(), "The API is unable to find this username")]'
+VALID_RESOURCE_XPATH = '//span[@data-translate="checking_browser"]'

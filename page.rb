@@ -11,6 +11,14 @@ class Page
     @date = table_date
   end
 
+  def valid_page?
+    parser.fetch_page.xpath(VALID_XPATH).empty?
+  end
+
+  def resource_page?
+    parser.fetch_page.xpath(VALID_RESOURCE_XPATH).empty?
+  end
+
   def login
     parser.fetch_page.xpath(LOGIN_XPATH).text.strip
   end
