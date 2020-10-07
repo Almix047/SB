@@ -29,7 +29,7 @@ class OutputList
           t_daily[2].text.tr(',', ''), info.table_media_avg
         ]
       else
-        row = ['nevalid']
+        row = [info.login, 'nevalid']
       end
       @rows.push(row)
     end

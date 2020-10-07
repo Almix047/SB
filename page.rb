@@ -20,7 +20,7 @@ class Page
   end
 
   def login
-    parser.fetch_page.xpath(LOGIN_XPATH).text.strip
+    parser.link[/\.{2}\/cache\/([\w ]+\.html)/, 1]
   end
 
   def followers
