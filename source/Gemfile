@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.7.1'
+ruby '2.7.2'
 
 # gem 'i18n', '~> 1.8', '>= 1.8.5'
 gem 'nokogiri', '~> 1.10', '>= 1.10.10'
