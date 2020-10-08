@@ -4,7 +4,7 @@ require_relative 'output_list.rb'
 require_relative 'page.rb'
 require 'csv'
 
-OUTPUT_FILENAME = "output_#{Time.now.localtime.strftime('%Y%m%d-%H:%M:%S')}.csv"
+OUTPUT_FILENAME = "output_#{Time.now.localtime.strftime('%Y%m%d-%H.%M.%S')}.csv"
 OUTPUT_FILE = File.expand_path('../../' + OUTPUT_FILENAME, __FILE__)
 
 # Recording scraped Information
