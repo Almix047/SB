@@ -20,7 +20,7 @@ class Page
   end
 
   def login
-    parser.link[/\.{2}\/cache\/([\w ]+\.html)/, 1]
+    parser.link[%r|\.{2}\/cache\/([\w ]+\.html)|, 1]
   end
 
   def followers
