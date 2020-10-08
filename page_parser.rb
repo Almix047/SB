@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# require 'selenium-webdriver'
+require 'selenium-webdriver'
 require 'nokogiri'
 
 class PageParser
@@ -17,6 +17,16 @@ class PageParser
   private
 
   def parse_page(link)
-    Nokogiri::HTML(File.open(link)) # Testing mode (offline, work with cache)
+    DRIVER.navigate.to link
+    timeout
+    Nokogiri::HTML(DRIVER.page_source)
+  end
+
+  def timeout
+    seconds = rand(3..9)
+    seconds.times do |curr_sec|
+      puts seconds - curr_sec
+      sleep(1)
+    end
   end
 end

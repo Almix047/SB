@@ -7,29 +7,18 @@ require 'csv'
 OUTPUT_FILENAME = "output_#{Time.now.localtime.strftime('%Y%m%d-%H:%M:%S')}.csv"
 OUTPUT_FILE = File.expand_path('../../' + OUTPUT_FILENAME, __FILE__)
 
-# Testing mode (offline, work with cache)
-CACHE = { khloekardashian: '../cache/kho.html',
-          beyonce: '../cache/Bey.html',
-          kyliejenner: '../cache/kyl.html',
-          kimkardashian: '../cache/kim.html',
-          jlo: '../cache/jlo.html',
-          balegavasia: '../cache/nvd.html' }.freeze
-
 # Recording scraped Information
 class RecordToFile
   def self.save_as_csv_file
-    # Testing mode (offline, work with cache)
     dataset = []
     INPUT.reject(&:empty?).each do |site|
-      cache_page_path = CACHE[site.to_sym]
-      if cache_page_path
-        site_page = Page.new(cache_page_path)
-        unless site_page.resource_page?
-          puts 'Need refresh'
-          break
-        end
-        dataset.push(site_page)
+      url = HOST + site
+      site_page = Page.new(url)
+      unless site_page.resource_page?
+        puts 'Need refresh'
+        break
       end
+      dataset.push(site_page)
     end
 
     rows = OutputList.new(dataset).call
