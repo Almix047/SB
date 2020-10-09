@@ -44,6 +44,7 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   nokogiri (~> 1.10, >= 1.10.10)
