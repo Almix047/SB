@@ -3,7 +3,7 @@
 # Configuration of the output view
 class OutputList
   HEADER = %w[
-    Login Followers ER Date DailyFollowers FollowersAVG Media MediaAVG
+    Login Followers ER TodayFollowers Yesterday YesterdayFollowers FollowersAVG Media MediaAVG
   ].freeze
 
   attr_reader :dataset
@@ -23,11 +23,19 @@ class OutputList
     dataset.each do |info|
       if info.valid_page?
         t_daily = info.table_daily
-        row = [
-          info.login, info.followers, info.er, info.date,
-          t_daily[0].text.tr(',', ''), info.table_followers_avg,
-          t_daily[2].text.tr(',', ''), info.table_media_avg
-        ]
+        if t_daily.empty? || info.table_today_followers.empty?
+          row = [
+            info.login, info.followers, info.er, 'nevalid', 'nevalid',
+            'nevalid', info.table_followers_avg,
+            'nevalid', info.table_media_avg
+          ]
+        else
+          row = [
+            info.login, info.followers, info.er, info.table_today_followers[0].text.tr(',', ''), (info.date - DAY).strftime('%Y-%m-%d'),
+            t_daily[0].text.tr(',', ''), info.table_followers_avg,
+            t_daily[2].text.tr(',', ''), info.table_media_avg
+          ]
+        end
       else
         row = [info.login, 'nevalid']
       end

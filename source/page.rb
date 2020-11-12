@@ -1,14 +1,26 @@
 # frozen_string_literal: true
 
 require_relative 'page_parser.rb'
-require_relative 'xpath_const.rb'
+
+DAY = 86_400
+
+LOGIN_XPATH = '//div[@id="YouTubeUserTopInfoBlockTop"]//h2/text()'
+
+TOP_INFO_BLOCK = '//div[@id="YouTubeUserTopInfoBlockTop"]//div[@class="YouTubeUserTopInfo"]'
+FOLLOWERS_XPATH = TOP_INFO_BLOCK + '/span[text()="Followers"]/../span[2]'
+ER_XPATH = TOP_INFO_BLOCK + '/span[text()="Engagement Rate"]/../span[3]'
+
+TABLE_AVG_FOLLOWERS_XPATH = '//div[contains(text(), "Daily Averages")]/..//span'
+
+VALID_XPATH = '//div[contains(text(), "The API is unable to find this username")]'
+VALID_RESOURCE_XPATH = '//span[@data-translate="checking_browser"]'
 
 class Page
   attr_reader :parser, :date
 
   def initialize(link)
     @parser = PageParser.new(link)
-    @date = table_date
+    @date = Time.now.localtime
   end
 
   def valid_page?
@@ -31,8 +43,15 @@ class Page
     parser.fetch_page.xpath(ER_XPATH).text.strip
   end
 
+  def table_today_followers
+    today = date.strftime('%Y-%m-%d')
+    date_xpath = "//div[contains(text(), '#{today}')]/../..//span"
+    parser.fetch_page.xpath(date_xpath)
+  end
+
   def table_daily
-    date_xpath = "//div[contains(text(), '#{date}')]/../..//span"
+    yesterday = (date - DAY).strftime('%Y-%m-%d')
+    date_xpath = "//div[contains(text(), '#{yesterday}')]/../..//span"
     parser.fetch_page.xpath(date_xpath)
   end
 
@@ -42,13 +61,5 @@ class Page
 
   def table_media_avg
     parser.fetch_page.xpath(TABLE_AVG_FOLLOWERS_XPATH)[2].text.tr(',', '')
-  end
-
-  private
-
-  def table_date
-    current_time = Time.now.localtime
-    yesterday = current_time - 86_400
-    yesterday.strftime('%Y-%m-%d')
   end
 end
