@@ -14,4 +14,4 @@ DRIVER = Selenium::WebDriver.for :firefox, options: options
 
 RecordToFile.save_as_csv_file
 
-# DRIVER.quit
+DRIVER.quit
