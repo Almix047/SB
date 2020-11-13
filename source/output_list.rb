@@ -23,15 +23,15 @@ class OutputList
     dataset.each do |info|
       if info.valid_page?
         t_daily = info.table_daily
-        if t_daily.empty? || info.table_today_followers.empty?
+        if t_daily.empty?
           row = [
-            info.login, info.followers, info.er, 'nevalid', 'nevalid',
+            info.login, info.followers, info.er, info.table_today_followers, 'nevalid',
             'nevalid', info.table_followers_avg,
             'nevalid', info.table_media_avg
           ]
         else
           row = [
-            info.login, info.followers, info.er, info.table_today_followers[0].text.tr(',', ''), (info.date - DAY).strftime('%Y-%m-%d'),
+            info.login, info.followers, info.er, info.table_today_followers, (info.date - DAY).strftime('%Y-%m-%d'),
             t_daily[0].text.tr(',', ''), info.table_followers_avg,
             t_daily[2].text.tr(',', ''), info.table_media_avg
           ]

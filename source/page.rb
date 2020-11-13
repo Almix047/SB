@@ -46,7 +46,12 @@ class Page
   def table_today_followers
     today = date.strftime('%Y-%m-%d')
     date_xpath = "//div[contains(text(), '#{today}')]/../..//span"
-    parser.fetch_page.xpath(date_xpath)
+    flw = parser.fetch_page.xpath(date_xpath)
+    if flw.any?
+      flw[0].text.tr(',', '')
+    else
+      'nevalid'
+    end
   end
 
   def table_daily
